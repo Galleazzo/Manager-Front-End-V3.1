@@ -14,12 +14,12 @@ export interface AppSettings {
 
 export const defaults: AppSettings = {
   navPos: 'side',
-  theme: 'light',
+  theme: 'auto',
   dir: 'ltr',
   showHeader: true,
   headerPos: 'fixed',
   showUserPanel: true,
   sidenavOpened: true,
   sidenavCollapsed: false,
-  language: 'en-US',
+  language: 'pt-BR',
 };

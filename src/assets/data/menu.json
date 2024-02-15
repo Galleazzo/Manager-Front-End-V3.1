@@ -11,6 +11,25 @@
       }
     },
     {
+      "route": "registrations",
+      "name": "register",
+      "type": "sub",
+      "icon": "color_lens",
+      "children": [
+        {
+          "route": "animals",
+          "name": "animals",
+          "type": "link"
+        }
+      ],
+      "permissions": {
+        "only": [
+          "ADMIN",
+          "MANAGER"
+        ]
+      }
+    },
+    {
       "route": "/",
       "name": "sessions",
       "type": "sub",
