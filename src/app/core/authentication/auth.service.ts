@@ -33,14 +33,12 @@ export class AuthService {
   }
 
   check() {
+    debugger
     return this.tokenService.valid();
   }
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
-    );
+  login(body: any) {
+    return this.loginService.login(body);
   }
 
   refresh() {

@@ -11,7 +11,7 @@
       }
     },
     {
-      "route": "registrations",
+      "route": "/",
       "name": "register",
       "type": "sub",
       "icon": "color_lens",
