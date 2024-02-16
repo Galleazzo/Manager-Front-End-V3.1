@@ -16,6 +16,11 @@ import { AnimalsComponent } from './registrations/animals/animals.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'auth/login', // Redireciona para '/auth/login' quando a URL for '/'
+    pathMatch: 'full' // Garante que somente URLs exatas sejam redirecionadas
+  },
+  {
+    path: '',
     component: AdminLayoutComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
@@ -31,7 +36,7 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'animals', component: AnimalsComponent}
+      { path: 'animals', component: AnimalsComponent }
     ]
   },
   {
@@ -44,6 +49,7 @@ const routes: Routes = [
   },
   { path: '**', redirectTo: 'dashboard' },
 ];
+
 
 @NgModule({
   imports: [

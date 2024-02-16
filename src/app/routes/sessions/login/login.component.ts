@@ -28,7 +28,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private router: Router, private auth: LoginService, private tokenService: TokenService, private _dir: Directionality, public snackBar: MatSnackBar) {
   }
-  
+
 
   loginForm = this.fb.nonNullable.group({
     username: ['paulinho@gmail.com', [Validators.required]],
@@ -43,21 +43,24 @@ export class LoginComponent {
     return this.loginForm.get('password')!;
   }
 
+
+
   login() {
     this.isSubmitting = true;
-
     this.tokenService.clear();
-    this.auth.login(this.loginForm.value).subscribe((response: any) => {
-
-      this.tokenService.setToken(response.token)
-
-      this.router.navigateByUrl('/');
-    }, (error) => {
-      const config = this._createConfig();
-      this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
-    });
+    this.auth.login(this.loginForm.value).subscribe({
+        next: (response: any) => {
+          this.tokenService.setToken(response.token)
+          this.router.navigateByUrl('/dashboards');
+        },
+        error: (errorRes: HttpErrorResponse) => {
+          this.router.navigateByUrl('/auth/login' || '/');
+          const config = this._createConfig();
+          this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
+          this.isSubmitting = false;
+        },
+      });
   }
-
 
 
   private _createConfig() {
