@@ -26,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class TranslateComponent {
   langs = {
+    'pt-BT': 'Portuguese',
     'en-US': 'English',
     'zh-CN': '中文简体',
     'zh-TW': '中文繁体',
@@ -35,7 +36,7 @@ export class TranslateComponent {
     private translate: TranslateService,
     private settings: SettingsService
   ) {
-    translate.addLangs(['en-US', 'zh-CN', 'zh-TW']);
+    translate.addLangs(['pt-BT', 'en-US', 'zh-CN', 'zh-TW']);
   }
 
   useLanguage(language: string) {

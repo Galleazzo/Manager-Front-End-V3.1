@@ -58,7 +58,7 @@ export class CustomizerComponent implements OnInit {
     dir: 'ltr',
     sidenavOpened: true,
     sidenavCollapsed: false,
-    language: 'en-US',
+    language: 'pt-BR',
   });
 
   formSubscription = Subscription.EMPTY;
