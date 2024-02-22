@@ -11,6 +11,12 @@
       }
     },
     {
+      "route": "animals",
+      "name": "animals",
+      "type": "link",
+      "icon": "pets"
+    },
+    {
       "route": "/",
       "name": "sessions",
       "type": "sub",

@@ -1,6 +1,7 @@
 {
   "menu": {
     "dashboard": "Painel",
+    "animals": "Animais",
     "design": "Design",
     "design.colors": "Sistema de Cores",
     "design.icons": "Ícones de Material",
