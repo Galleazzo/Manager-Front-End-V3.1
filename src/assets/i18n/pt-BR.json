@@ -1,7 +1,8 @@
 {
   "menu": {
     "dashboard": "Painel",
-    "animals": "Animais",
+    "registrations": "Registros",
+    "registrations.animals": "Animais",
     "design": "Design",
     "design.colors": "Sistema de Cores",
     "design.icons": "Ícones de Material",
@@ -119,6 +120,14 @@
     "confirm_delete": "Confirmar exclusão?",
     "ok": "Ok",
     "close": "Fechar"
+  },
+  "animals_list_table": {
+    "priority": "Prioridade",
+    "id": "id",
+    "name": "Nome",
+    "animalAge": "Idade",
+    "animalType": "Tipo",
+    "registrationDate": "Data de Cadastro"
   },
   "profile": "Perfil",
   "edit_profile": "Editar perfil",

@@ -11,10 +11,17 @@
       }
     },
     {
-      "route": "animals",
-      "name": "animals",
-      "type": "link",
-      "icon": "pets"
+      "route": "registrations",
+      "name": "registrations",
+      "type": "sub",
+      "children": [
+        {
+          "route": "animals",
+          "name": "animals",
+          "type": "link",
+          "icon": "pets"
+        }
+      ]
     },
     {
       "route": "/",
