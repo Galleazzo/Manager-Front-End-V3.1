@@ -51,4 +51,11 @@ describe('authGuard function unit test', () => {
     });
   });
 
+  it('should redirect to /auth/login when authenticate failed', () => {
+    inject([AuthService, Router], () => {
+      spyOn(authService, 'check').and.returnValue(false);
+
+      expect(authGuard(route, state)).toEqual(router.parseUrl('/auth/login'));
+    });
+  });
 });

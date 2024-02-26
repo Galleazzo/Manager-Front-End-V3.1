@@ -49,7 +49,10 @@ export class TokenService implements OnDestroy {
     return this;
   }
 
-  
+  clear(): void {
+    this.save();
+  }
+
   valid(): boolean {
     return this.token?.valid() ?? false;
   }
@@ -96,26 +99,5 @@ export class TokenService implements OnDestroy {
     if (this.timer$ && !this.timer$.closed) {
       this.timer$.unsubscribe();
     }
-  }
-
-
-  //new methods ----------------------------------------------------
-
-
-  public setToken(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  public getToken(): string {
-    var value = JSON.parse(localStorage.getItem('token')!);
-    return value;
-  }
-
-  public clear() {
-    localStorage.removeItem('token');
-  }
-
-  public isLoggedIn() {
-    return this.getToken();
   }
 }

@@ -11,23 +11,10 @@
       }
     },
     {
-      "route": "/",
-      "name": "register",
-      "type": "sub",
-      "icon": "color_lens",
-      "children": [
-        {
-          "route": "animals",
-          "name": "animals",
-          "type": "link"
-        }
-      ],
-      "permissions": {
-        "only": [
-          "ADMIN",
-          "MANAGER"
-        ]
-      }
+      "route": "animals",
+      "name": "animals",
+      "type": "link",
+      "icon": "pets"
     },
     {
       "route": "/",

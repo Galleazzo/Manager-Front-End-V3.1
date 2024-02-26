@@ -11,14 +11,9 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { authGuard } from '@core';
-import { AnimalsComponent } from './registrations/animals/animals.component';
+import { AnimalsComponent } from './animals/animals.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'auth/login', // Redireciona para '/auth/login' quando a URL for '/'
-    pathMatch: 'full' // Garante que somente URLs exatas sejam redirecionadas
-  },
   {
     path: '',
     component: AdminLayoutComponent,
@@ -34,12 +29,6 @@ const routes: Routes = [
     ],
   },
   {
-    path: '',
-    children: [
-      { path: 'animals', component: AnimalsComponent }
-    ]
-  },
-  {
     path: 'auth',
     component: AuthLayoutComponent,
     children: [
@@ -48,8 +37,8 @@ const routes: Routes = [
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
+  { path: 'animals', component: AnimalsComponent },
 ];
-
 
 @NgModule({
   imports: [

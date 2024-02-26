@@ -1,12 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs';
 
-import { AuthService, LoginService, TokenService } from '@core/authentication';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Directionality } from '@angular/cdk/bidi';
+import { AuthService } from '@core/authentication';
 
 @Component({
   selector: 'app-login',
@@ -14,26 +12,19 @@ import { Directionality } from '@angular/cdk/bidi';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-
   isSubmitting = false;
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  message = 'Login ou senha incorreta.';
-  actionButtonLabel = 'Retry';
-  action = false;
-  setAutoHide = true;
-  autoHide = 10000;
-  addExtraClass = false;
-
-  constructor(private fb: FormBuilder, private router: Router, private auth: LoginService, private tokenService: TokenService, private _dir: Directionality, public snackBar: MatSnackBar) {
-  }
-
-
   loginForm = this.fb.nonNullable.group({
-    username: ['paulinho@gmail.com', [Validators.required]],
-    password: ['123456', [Validators.required]]
+    username: ['ng-matero', [Validators.required]],
+    password: ['ng-matero', [Validators.required]],
+    rememberMe: [false],
   });
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService
+  ) {}
 
   get username() {
     return this.loginForm.get('username')!;
@@ -43,33 +34,32 @@ export class LoginComponent {
     return this.loginForm.get('password')!;
   }
 
-
+  get rememberMe() {
+    return this.loginForm.get('rememberMe')!;
+  }
 
   login() {
     this.isSubmitting = true;
-    this.tokenService.clear();
-    this.auth.login(this.loginForm.value).subscribe({
-        next: (response: any) => {
-          this.tokenService.setToken(response.token)
-          this.router.navigateByUrl('/dashboards');
+
+    this.auth
+      .login(this.username.value, this.password.value, this.rememberMe.value)
+      .pipe(filter(authenticated => authenticated))
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl('/');
         },
         error: (errorRes: HttpErrorResponse) => {
-          this.router.navigateByUrl('/auth/login' || '/');
-          const config = this._createConfig();
-          this.snackBar.open(this.message, this.action ? this.actionButtonLabel : undefined, config);
+          if (errorRes.status === 422) {
+            const form = this.loginForm;
+            const errors = errorRes.error.errors;
+            Object.keys(errors).forEach(key => {
+              form.get(key === 'email' ? 'username' : key)?.setErrors({
+                remote: errors[key][0],
+              });
+            });
+          }
           this.isSubmitting = false;
         },
       });
-  }
-
-
-  private _createConfig() {
-    const config = new MatSnackBarConfig();
-    config.verticalPosition = this.verticalPosition;
-    config.horizontalPosition = this.horizontalPosition;
-    config.duration = this.setAutoHide ? this.autoHide : 0;
-    config.panelClass = this.addExtraClass ? ['demo-party'] : undefined;
-    config.direction = this._dir.value;
-    return config;
   }
 }

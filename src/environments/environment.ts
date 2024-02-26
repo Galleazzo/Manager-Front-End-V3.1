@@ -6,8 +6,6 @@ export const environment = {
   production: false,
   baseUrl: '',
   useHash: false,
-  debugging: true,
-  server: 'http://localhost:8080'
 };
 
 /*
