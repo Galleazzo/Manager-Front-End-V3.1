@@ -8,6 +8,7 @@ import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared';
 import { TablesDataService } from '../data.service';
+import { AnimalsService } from '@shared/services/animals.service';
 
 @Component({
   selector: 'app-animals',
@@ -84,12 +85,22 @@ export class AnimalsComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private dataSrv: TablesDataService,
-    private dialog: MtxDialog
+    private dialog: MtxDialog,
+    private animalsService: AnimalsService
   ) {}
 
   ngOnInit() {
-    this.list = this.dataSrv.getData();
-    this.isLoading = false;
+    this.search();
+  }
+
+  search() {
+    this.isLoading = true;
+    debugger
+    
+    this.animalsService.getAll().subscribe((response: any) => {
+      this.list = response;
+      this.isLoading = false
+    })
   }
 
   edit(value: any) {
