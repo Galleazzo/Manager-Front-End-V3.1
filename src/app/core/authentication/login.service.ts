@@ -4,15 +4,22 @@ import { map } from 'rxjs/operators';
 
 import { Menu } from '@core';
 import { Token, User } from './interface';
+import { environment } from '@env/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(protected http: HttpClient) {}
+  
+  constructor(protected http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.http.post<Token>('/auth/login', { username, password, rememberMe });
+  login(loginBody: any) {
+    return this.http.post<any>(environment.server + '/auth/login',  loginBody );
+  }
+
+  verifyToken(){
+    return this.http.get<any>(environment.server + `/auth/checkToken?token=${this.getToken()}`)
   }
 
   refresh(params: Record<string, any>) {
@@ -20,7 +27,8 @@ export class LoginService {
   }
 
   logout() {
-    return this.http.post<any>('/auth/logout', {});
+    localStorage.clear();
+    this.router.navigateByUrl('/auth/login');
   }
 
   me() {
@@ -29,5 +37,14 @@ export class LoginService {
 
   menu() {
     return this.http.get<{ menu: Menu[] }>('/me/menu').pipe(map(res => res.menu));
+  }
+
+  saveToken(token: any) {
+    localStorage.setItem("token", token);
+  }
+
+  getToken(){
+    var token = localStorage.getItem("token");    
+    return token;
   }
 }

@@ -24,7 +24,6 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 }
 
 import { LoginService } from '@core/authentication/login.service';
-import { FakeLoginService } from './fake-login.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,7 +51,6 @@ import { FakeLoginService } from './fake-login.service';
     // ==================================================
     // 👇 ❌ Remove it in the realworld application
     //
-    { provide: LoginService, useClass: FakeLoginService },
     //
     // ==================================================
     ...httpInterceptorProviders,

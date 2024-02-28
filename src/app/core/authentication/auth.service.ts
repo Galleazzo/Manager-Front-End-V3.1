@@ -36,12 +36,7 @@ export class AuthService {
     return this.tokenService.valid();
   }
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
-    );
-  }
+
 
   refresh() {
     return this.loginService
@@ -53,12 +48,7 @@ export class AuthService {
       );
   }
 
-  logout() {
-    return this.loginService.logout().pipe(
-      tap(() => this.tokenService.clear()),
-      map(() => !this.check())
-    );
-  }
+  
 
   user() {
     return this.user$.pipe(share());
