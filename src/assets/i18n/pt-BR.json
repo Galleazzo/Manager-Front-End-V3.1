@@ -127,7 +127,13 @@
     "name": "Nome",
     "animalAge": "Idade",
     "animalType": "Tipo",
-    "registrationDate": "Data de Cadastro"
+    "registrationDate": "Data de Cadastro",
+    "operation": "Operação",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "confirm_delete": "Confirmar exclusão?",
+    "ok": "Ok",
+    "close": "Fechar"
   },
   "profile": "Perfil",
   "edit_profile": "Editar perfil",

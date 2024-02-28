@@ -64,20 +64,48 @@ export class AnimalsComponent implements OnInit {
       field: 'registrationDate',
       hide: true,
       minWidth: 120,
-    }
+    },
+    {
+      header: this.translate.stream('animals_list_table.operation'),
+      field: 'operation',
+      minWidth: 140,
+      width: '140px',
+      pinned: 'right',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'edit',
+          tooltip: this.translate.stream('animals_list_table.edit'),
+          click: record => this.edit(record),
+        },
+        {
+          type: 'icon',
+          color: 'warn',
+          icon: 'delete',
+          tooltip: this.translate.stream('animals_list_table.delete'),
+          pop: {
+            title: this.translate.stream('animals_list_table.confirm_delete'),
+            closeText: this.translate.stream('animals_list_table.close'),
+            okText: this.translate.stream('animals_list_table.ok'),
+          },
+          click: record => this.delete(record),
+        },
+      ],
+    },
   ];
   list: any[] = [];
-  isLoading = true;
+  isLoading: any;
 
-  multiSelectable = true;
-  rowSelectable = true;
+  multiSelectable = false;
+  rowSelectable = false;
   hideRowSelectionCheckbox = false;
   showToolbar = true;
-  columnHideable = true;
-  columnSortable = true;
-  columnPinnable = true;
-  rowHover = false;
-  rowStriped = false;
+  columnHideable = false;
+  columnSortable = false;
+  columnPinnable = false;
+  rowHover = true;
+  rowStriped = true;
   showPaginator = true;
   expandable = false;
   columnResizable = false;
@@ -87,21 +115,21 @@ export class AnimalsComponent implements OnInit {
     private dataSrv: TablesDataService,
     private dialog: MtxDialog,
     private animalsService: AnimalsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.search();
   }
 
   search() {
-    this.isLoading = true;
-    debugger
-    
+    this.isLoading = true; 
+
     this.animalsService.getAll().subscribe((response: any) => {
       this.list = response;
-      this.isLoading = false
+      this.isLoading = false;
     })
-  }
+}
+
 
   edit(value: any) {
     const dialogRef = this.dialog.originalOpen(AnimalsComponent, {

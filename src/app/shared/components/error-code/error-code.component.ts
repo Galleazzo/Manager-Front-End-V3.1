@@ -1,6 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { LoginService } from '@core';
 
 @Component({
   selector: 'error-code',
@@ -14,4 +15,10 @@ export class ErrorCodeComponent {
   @Input() code = '';
   @Input() title = '';
   @Input() message = '';
+
+  constructor(private loginSerice: LoginService){}
+
+  logout(){
+    this.loginSerice.logout();
+  }
 }
