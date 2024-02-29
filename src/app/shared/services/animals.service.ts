@@ -16,4 +16,8 @@ export class AnimalsService {
     getAll(): Observable<any> {
         return this._httpClient.get<any[]>(environment.server + `/animals/getAll`)
     }
+
+    getByCriteria(name: string, page: number, pageSize: number, sort: string, order: string): Observable<any> {
+        return this._httpClient.get<any[]>(environment.server + `/animals/getByCriteria?name=${name}&page=${page}&pageSize=${pageSize}&sort=${sort}&order=${order}`)
+    }
 }
