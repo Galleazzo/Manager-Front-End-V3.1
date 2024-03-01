@@ -8,6 +8,7 @@ import { RegisterComponent } from './sessions/register/register.component';
 import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
+import { AnimalsFormComponent } from './registrations/animals/animals-form/animals-form.component';
 
 const COMPONENTS: any[] = [
   DashboardComponent,

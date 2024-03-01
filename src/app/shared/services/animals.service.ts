@@ -20,4 +20,8 @@ export class AnimalsService {
     getByCriteria(name: string, page: number, pageSize: number, sort: string, order: string): Observable<any> {
         return this._httpClient.get<any[]>(environment.server + `/animals/getByCriteria?name=${name}&page=${page}&pageSize=${pageSize}&sort=${sort}&order=${order}`)
     }
+
+    save(body: any): Observable<any> {
+        return this._httpClient.post<any>(environment.server + `/animals`, body);
+    }
 }

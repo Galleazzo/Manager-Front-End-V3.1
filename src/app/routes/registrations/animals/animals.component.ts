@@ -31,12 +31,38 @@ import { finalize } from 'rxjs';
 export class AnimalsComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'id', field: 'id' },
-    { header: 'Name', field: 'name' },
-    { header: 'animalAge', field: 'animalAge' },
-    { header: 'animalType', field: 'animalType' },
-    { header: 'instagramURL', field: 'instagramURL', type: 'link' },
-    { header: 'registrationDate', field: 'registrationDate', type: 'date' },
-    { header: 'priority', field: 'priority' }
+    { header: 'Nome', field: 'name' },
+    { header: 'Idade', field: 'animalAge' },
+    { header: 'Tipo', field: 'animalType' },
+    { header: 'URL do insta', field: 'instagramURL', type: 'link' },
+    { header: 'Data de cadastro', field: 'registrationDate', type: 'date' },
+    { header: 'Prioridade', field: 'priority' },
+    {
+      header: 'Ações',
+      field: 'actions',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'edit',
+          tooltip: 'Editar',
+          click: (record) => {
+            // Implemente a lógica de edição aqui, por exemplo:
+            //this.editRecord(record);
+          }
+        },
+        {
+          type: 'icon',
+          icon: 'delete',
+          tooltip: 'Excluir',
+          click: (record) => {
+            console.log(record);
+            
+            this.deleteById(record.id)
+          }
+        }
+      ]
+    }
   ];
   list: any[] = [];
   total = 0;
@@ -47,7 +73,7 @@ export class AnimalsComponent implements OnInit {
   sort: string = "id";
   order: string = "desc";
 
-  constructor(private animalsService: AnimalsService,private router: Router,) { }
+  constructor(private animalsService: AnimalsService, private router: Router,) { }
 
   ngOnInit() {
     this.getList();
@@ -85,7 +111,10 @@ export class AnimalsComponent implements OnInit {
   }
 
   new() {
-    this.router.navigateByUrl('/animals/new');
+    this.router.navigateByUrl('/registrations/animals/new');
   };
 
+  deleteById(id: any){
+    return id;
+  }
 }

@@ -11,6 +11,7 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { authGuard } from '@core';
+import { AnimalsFormComponent } from './registrations/animals/animals-form/animals-form.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,7 @@ const routes: Routes = [
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
+  { path: 'animalsForm', component: AnimalsFormComponent },
 ];
 
 @NgModule({
