@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { PageHeaderComponent } from '@shared';
 import { AnimalsService } from '@shared/services/animals.service';
@@ -22,11 +22,13 @@ import { ToastrService } from 'ngx-toastr';
     PageHeaderComponent,
   ],
 })
-export class AnimalsFormComponent {
+export class AnimalsFormComponent implements OnInit {
 
 
   animalForm = new FormGroup({});
   model = {};
+  type: string = "";
+
   fields: FormlyFieldConfig[] = [
     {
       fieldGroupClassName: 'row',
@@ -144,10 +146,18 @@ export class AnimalsFormComponent {
     },
   ];
 
-  constructor(private toast: ToastrService, private animalService: AnimalsService, private router: Router) { }
+  constructor(private toast: ToastrService, private animalService: AnimalsService, private router: Router, private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.type = this.route.snapshot.data['type'];
+
+    console.log(this.type);
+    
+  }
+
 
   submit() {
-    
+
     this.animalService.save(this.animalForm.value).subscribe((response: any) => {
       console.log(response);
       return this.router.navigate(['/registrations/animals']);
@@ -159,7 +169,7 @@ export class AnimalsFormComponent {
     this.toast.success(JSON.stringify(obj));
   }
 
-  cancel(){
+  cancel() {
     return this.router.navigate(['/registrations/animals']);
   }
 }

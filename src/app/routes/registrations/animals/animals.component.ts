@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PageEvent } from '@angular/material/paginator';
@@ -11,6 +12,7 @@ import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 import { PageHeaderComponent } from '@shared';
 import { AnimalsService } from '@shared/services/animals.service';
 import { finalize } from 'rxjs';
+import { ModalDeleteComponent } from './delete-modal/modal-delete.component';
 
 @Component({
   selector: 'app-animals',
@@ -47,18 +49,15 @@ export class AnimalsComponent implements OnInit {
           icon: 'edit',
           tooltip: 'Editar',
           click: (record) => {
-            // Implemente a lógica de edição aqui, por exemplo:
-            //this.editRecord(record);
+            this.editAnimal(record)
           }
         },
         {
           type: 'icon',
           icon: 'delete',
           tooltip: 'Excluir',
-          click: (record) => {
-            console.log(record);
-            
-            this.deleteById(record.id)
+          click: (value) => {
+            this.deleteById(value)
           }
         }
       ]
@@ -73,7 +72,7 @@ export class AnimalsComponent implements OnInit {
   sort: string = "id";
   order: string = "desc";
 
-  constructor(private animalsService: AnimalsService, private router: Router,) { }
+  constructor(private animalsService: AnimalsService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getList();
@@ -114,7 +113,18 @@ export class AnimalsComponent implements OnInit {
     this.router.navigateByUrl('/registrations/animals/new');
   };
 
-  deleteById(id: any){
-    return id;
+  deleteById(value: any) {
+    const dialogRef = this.dialog.open(ModalDeleteComponent, {
+      data: {
+        data: value
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => (
+      this.ngOnInit()
+    ));
+  }
+
+  editAnimal(value: any) {
+    this.router.navigateByUrl(`/registrations/animals/edit/${value.id}`)
   }
 }

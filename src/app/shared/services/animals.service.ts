@@ -24,4 +24,8 @@ export class AnimalsService {
     save(body: any): Observable<any> {
         return this._httpClient.post<any>(environment.server + `/animals`, body);
     }
+
+    deleteById(id: any) {
+        return this._httpClient.delete<any>(environment.server + `/animals?id=${id}`)
+    }
 }

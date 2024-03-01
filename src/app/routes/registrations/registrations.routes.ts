@@ -5,4 +5,5 @@ import { AnimalsFormComponent } from './animals/animals-form/animals-form.compon
 export const routes: Routes = [
   { path: 'animals', component: AnimalsComponent },
   { path: 'animals/new', component: AnimalsFormComponent },
+  { path: 'animals/edit/:id', component: AnimalsFormComponent },
 ];
