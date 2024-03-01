@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
 import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 import { PageHeaderComponent } from '@shared';
 import { AnimalsService } from '@shared/services/animals.service';
@@ -40,24 +41,13 @@ export class AnimalsComponent implements OnInit {
   list: any[] = [];
   total = 0;
   isLoading = true;
-  name: string = "";
+  animalName: string = "";
   page: any = 0;
   pageSize: any = 10;
   sort: string = "id";
   order: string = "desc";
 
-  query = {
-    q: 'user:nzbin',
-    sort: 'stars',
-    order: 'desc',
-    page: 0,
-    per_page: 10,
-  };
-
-
-
-  constructor(private animalsService: AnimalsService
-  ) { }
+  constructor(private animalsService: AnimalsService,private router: Router,) { }
 
   ngOnInit() {
     this.getList();
@@ -65,11 +55,10 @@ export class AnimalsComponent implements OnInit {
 
   getList() {
     this.isLoading = true;
-
-    this.animalsService.getByCriteria(this.name, this.page, this.pageSize, this.sort, this.order).pipe(finalize(() => {
+    debugger
+    this.animalsService.getByCriteria(this.animalName, this.page, this.pageSize, this.sort, this.order).pipe(finalize(() => {
       this.isLoading = false;
     })).subscribe(res => {
-      console.log(res);
 
       this.list = res.content;
       this.total = res.totalElements;
@@ -78,19 +67,25 @@ export class AnimalsComponent implements OnInit {
   }
 
   getNextPage(e: PageEvent) {
-    this.query.page = e.pageIndex;
-    this.query.per_page = e.pageSize;
+    this.page = e.pageIndex;
+    this.pageSize = e.pageSize;
     this.getList();
   }
 
   search() {
-    this.query.page = 0;
+    this.page = 0;
     this.getList();
   }
 
   reset() {
-    this.query.page = 0;
-    this.query.per_page = 10;
+    this.page = 0;
+    this.pageSize = 10;
+    this.animalName = "";
     this.getList();
   }
+
+  new() {
+    this.router.navigateByUrl('/animals/new');
+  };
+
 }
