@@ -14,11 +14,11 @@ export class AnimalsService {
 
 
     getAll(): Observable<any> {
-        return this._httpClient.get<any[]>(environment.server + `/animals/getAll`)
+        return this._httpClient.get<any[]>(environment.server + `/animals/getAll`);
     }
 
     getByCriteria(name: string, page: number, pageSize: number, sort: string, order: string): Observable<any> {
-        return this._httpClient.get<any[]>(environment.server + `/animals/getByCriteria?name=${name}&page=${page}&pageSize=${pageSize}&sort=${sort}&order=${order}`)
+        return this._httpClient.get<any[]>(environment.server + `/animals/getByCriteria?name=${name}&page=${page}&pageSize=${pageSize}&sort=${sort}&order=${order}`);
     }
 
     save(body: any): Observable<any> {
@@ -26,6 +26,11 @@ export class AnimalsService {
     }
 
     deleteById(id: any) {
-        return this._httpClient.delete<any>(environment.server + `/animals?id=${id}`)
+        return this._httpClient.delete<any>(environment.server + `/animals?id=${id}`);
     }
+
+    getById(id: any): Observable<any> {
+        return this._httpClient.get<any>(environment.server + `/animals?id=${id}`);
+    }
+  
 }

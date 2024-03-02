@@ -152,5 +152,7 @@
   "register_title": "Leva apenas alguns segundos para criar sua conta",
   "read_and_agree": "Li e concordo com os termos de serviço",
   "have_an_account": "Já tem uma conta",
-  "restore_defaults": "Restaurar padrões"
+  "restore_defaults": "Restaurar padrões",
+  "DOG": "Cachorro",
+  "CAT": "Gato"
 }

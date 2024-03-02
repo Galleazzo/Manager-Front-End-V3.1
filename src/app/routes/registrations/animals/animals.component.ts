@@ -13,6 +13,7 @@ import { PageHeaderComponent } from '@shared';
 import { AnimalsService } from '@shared/services/animals.service';
 import { finalize } from 'rxjs';
 import { ModalDeleteComponent } from './delete-modal/modal-delete.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-animals',
@@ -63,6 +64,8 @@ export class AnimalsComponent implements OnInit {
       ]
     }
   ];
+
+
   list: any[] = [];
   total = 0;
   isLoading = true;
@@ -72,7 +75,8 @@ export class AnimalsComponent implements OnInit {
   sort: string = "id";
   order: string = "desc";
 
-  constructor(private animalsService: AnimalsService, private router: Router, private dialog: MatDialog) { }
+  constructor(private animalsService: AnimalsService, private router: Router, private dialog: MatDialog, private translate: TranslateService) {
+  }
 
   ngOnInit() {
     this.getList();
@@ -80,7 +84,6 @@ export class AnimalsComponent implements OnInit {
 
   getList() {
     this.isLoading = true;
-    debugger
     this.animalsService.getByCriteria(this.animalName, this.page, this.pageSize, this.sort, this.order).pipe(finalize(() => {
       this.isLoading = false;
     })).subscribe(res => {
