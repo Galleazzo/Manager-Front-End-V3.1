@@ -124,13 +124,11 @@ export class AnimalsFormComponent implements OnInit {
       },
     },
     {
-      //THIS IS THE FIELD I WANT TO ADD************************************************************************
-      type: 'file',
-      key: 'image',
+      type: 'inputFile',
+      key: 'animalImage',
       templateOptions: {
         label: 'Imagem do animal',
         accept: 'image/*',
-        required: true,
       },
     },
     {
