@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, finalize } from 'rxjs';
 
 import { AuthService, LoginService } from '@core/authentication';
 
@@ -37,11 +37,11 @@ export class LoginComponent {
   login() {
     this.isSubmitting = true;
 
-    this.loginService.login(this.loginForm.value).subscribe((response: any) => {
-      this.loginService.saveToken(response.token);
+    this.loginService.login(this.loginForm.value).pipe(finalize(() => {
       this.router.navigateByUrl('/');
-      console.log("BEM VINDO GUTO!!");
-      this.isSubmitting = false;
+      this.isSubmitting = false
+    })).subscribe((response: any) => {
+      this.loginService.saveToken(response.token);
       
     },(error) => {
       console.log("SEM AUTORIZAÇÃO");
