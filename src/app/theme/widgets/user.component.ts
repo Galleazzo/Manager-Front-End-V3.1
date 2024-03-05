@@ -6,7 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { debounceTime, tap } from 'rxjs/operators';
 
-import { AuthService, SettingsService, User } from '@core';
+import { AuthService, LoginService, SettingsService, User } from '@core';
 
 @Component({
   selector: 'app-user',
@@ -53,7 +53,8 @@ export class UserComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private cdr: ChangeDetectorRef,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -67,9 +68,7 @@ export class UserComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout().subscribe(() => {
-      this.router.navigateByUrl('/auth/login');
-    });
+    this.loginService.logout();
   }
 
   restore() {

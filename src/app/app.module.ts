@@ -24,10 +24,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 }
 
 import { LoginService } from '@core/authentication/login.service';
-import { FakeLoginService } from './fake-login.service';
+import { FormlyFieldInput } from '@shared/components/input-formly-custom/formly-field-input';
+import { FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FormlyFieldInput],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -46,13 +47,17 @@ import { FakeLoginService } from './fake-login.service';
       },
     }),
     BrowserAnimationsModule,
+    FormlyModule.forRoot({
+      types: [
+        { name: 'inputFile', component: FormlyFieldInput },
+      ]
+    }),
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
     // ==================================================
     // 👇 ❌ Remove it in the realworld application
     //
-    { provide: LoginService, useClass: FakeLoginService },
     //
     // ==================================================
     ...httpInterceptorProviders,

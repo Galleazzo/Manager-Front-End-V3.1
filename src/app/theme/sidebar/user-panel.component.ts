@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, User } from '@core/authentication';
+import { AuthService, LoginService, User } from '@core/authentication';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -44,7 +44,8 @@ export class UserPanelComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +53,6 @@ export class UserPanelComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout().subscribe(() => {
-      this.router.navigateByUrl('/auth/login');
-    });
+    this.loginService.logout();
   }
 }

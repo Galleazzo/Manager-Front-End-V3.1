@@ -1,1 +1,25 @@
-<p>animals works!</p>
+
+<div class="header-buttons">
+  <form class="m-x--4">
+    <mat-form-field class="m-x-4" appearance="outline">
+      <input matInput [(ngModel)]="animalName" name="animalName" placeholder="Nome">
+    </mat-form-field>
+
+    <button class="m-x-4" mat-raised-button color="primary" (click)="search()">Search</button>
+    <button class="m-x-4" mat-raised-button color="warn" (click)="reset()">Reset</button>
+  </form>
+
+  <div> 
+    <button class="m-x-4" mat-raised-button color="primary" (click)="new()">Novo</button>
+  </div>
+</div>
+<mtx-grid [data]="list"
+          [columns]="columns"
+          [length]="total"
+          [loading]="isLoading"
+          [pageOnFront]="false"
+          [pageIndex]="page"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5,10,20]"
+          (page)="getNextPage($event)">
+</mtx-grid>

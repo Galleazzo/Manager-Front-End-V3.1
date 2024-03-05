@@ -11,7 +11,7 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { authGuard } from '@core';
-import { AnimalsComponent } from './animals/animals.component';
+import { AnimalsFormComponent } from './registrations/animals/animals-form/animals-form.component';
 
 const routes: Routes = [
   {
@@ -22,10 +22,13 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'animals', component: AnimalsComponent },
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
       { path: '500', component: Error500Component },
+      
+      { path: 'registrations',
+        loadChildren: () => import('./registrations/registrations.routes').then(m => m.routes),
+      }
     ],
   },
   {
@@ -37,7 +40,7 @@ const routes: Routes = [
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
-  { path: 'animals', component: AnimalsComponent },
+  { path: 'animalsForm', component: AnimalsFormComponent },
 ];
 
 @NgModule({

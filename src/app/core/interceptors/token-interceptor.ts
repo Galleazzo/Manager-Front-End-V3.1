@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { TokenService } from '@core/authentication';
+import { LoginService, TokenService } from '@core/authentication';
 import { BASE_URL } from './base-url-interceptor';
 
 @Injectable()
@@ -19,10 +19,12 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private tokenService: TokenService,
     private router: Router,
+    private loginService: LoginService,
     @Optional() @Inject(BASE_URL) private baseUrl?: string
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    
     const handler = () => {
       if (request.url.includes('/auth/logout')) {
         this.router.navigateByUrl('/auth/login');
@@ -33,11 +35,14 @@ export class TokenInterceptor implements HttpInterceptor {
       }
     };
 
-    if (this.tokenService.valid() && this.shouldAppendToken(request.url)) {
+    var token = this.loginService.getToken();
+
+
+    if(token != null && this.loginService.verifyToken()){
       return next
         .handle(
           request.clone({
-            headers: request.headers.append('Authorization', this.tokenService.getBearerToken()),
+            headers: request.headers.append('Authorization', token),
             withCredentials: true,
           })
         )
@@ -55,17 +60,4 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(tap(() => handler()));
   }
 
-  private shouldAppendToken(url: string) {
-    return !this.hasHttpScheme(url) || this.includeBaseUrl(url);
-  }
-
-  private includeBaseUrl(url: string) {
-    if (!this.baseUrl) {
-      return false;
-    }
-
-    const baseUrl = this.baseUrl.replace(/\/$/, '');
-
-    return new RegExp(`^${baseUrl}`, 'i').test(url);
-  }
 }

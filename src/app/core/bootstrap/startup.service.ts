@@ -3,6 +3,8 @@ import { AuthService, User } from '@core/authentication';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { switchMap, tap } from 'rxjs/operators';
 import { Menu, MenuService } from './menu.service';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,8 @@ export class StartupService {
     private authService: AuthService,
     private menuService: MenuService,
     private permissonsService: NgxPermissionsService,
-    private rolesService: NgxRolesService
+    private rolesService: NgxRolesService,
+    protected http: HttpClient
   ) {}
 
   /**
@@ -20,19 +23,20 @@ export class StartupService {
    * such as permissions and roles.
    */
   load() {
-    return new Promise<void>((resolve, reject) => {
-      this.authService
-        .change()
-        .pipe(
-          tap(user => this.setPermissions(user)),
-          switchMap(() => this.authService.menu()),
-          tap(menu => this.setMenu(menu))
-        )
-        .subscribe({
-          next: () => resolve(),
-          error: () => resolve(),
-        });
+    return new Promise<void>(resolve => {
+      this.menu()
+        .pipe(tap(menu => this.setMenu(menu)))
+        .subscribe(
+          () => resolve(),
+          () => resolve()
+        );
     });
+  }
+
+  menu() {
+    return this.http
+      .get<{ menu: Menu[] }>('assets/data/menu.json?_t=' + Date.now())
+      .pipe(map(res => res.menu));
   }
 
   private setMenu(menu: Menu[]) {

@@ -1,0 +1,17 @@
+<mat-progress-bar mode="query" color="accent" aria-label="Searching" *ngIf="isLoading" ></mat-progress-bar>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Formulário do Pet</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <form [formGroup]="animalForm" (ngSubmit)="submit()">
+            <formly-form [model]="model" [fields]="fields" [form]="animalForm"></formly-form>
+
+            <div class="d-flex justify-content-center m-t-8">
+                <button mat-button class="m-x-8" type="button" (click)="cancel()">Cancel</button>
+                <button mat-raised-button color="primary">Submit</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

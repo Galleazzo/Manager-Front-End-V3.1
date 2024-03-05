@@ -39,45 +39,6 @@ describe('AuthService', () => {
     expect(authService).toBeTruthy();
   });
 
-  it('should log in failed', () => {
-    authService.login(email, 'password', false).subscribe(isLogin => expect(isLogin).toBeFalse());
-    httpMock.expectOne('/auth/login').flush({});
-
-    expect(authService.check()).toBeFalse();
-  });
-
-  it('should log in successful and get user info', () => {
-    user$.pipe(skip(1)).subscribe(currentUser => expect(currentUser.id).toEqual(user.id));
-    authService.login(email, 'password', false).subscribe(isLogin => expect(isLogin).toBeTrue());
-    httpMock.expectOne('/auth/login').flush(token);
-
-    expect(authService.check()).toBeTrue();
-    httpMock.expectOne('/me').flush(user);
-  });
-
-  it('should log out failed when user is not login', () => {
-    spyOn(loginService, 'logout').and.callThrough();
-    expect(authService.check()).toBeFalse();
-
-    authService.logout().subscribe();
-    httpMock.expectOne('/auth/logout');
-
-    expect(authService.check()).toBeFalse();
-    expect(loginService.logout).toHaveBeenCalled();
-  });
-
-  it('should log out successful when user is login', () => {
-    tokenService.set(token);
-    expect(authService.check()).toBeTrue();
-    httpMock.expectOne('/me').flush(user);
-
-    user$.pipe(skip(1)).subscribe(currentUser => expect(currentUser.id).toBeUndefined());
-    authService.logout().subscribe();
-    httpMock.expectOne('/auth/logout').flush({});
-
-    expect(authService.check()).toBeFalse();
-  });
-
   it('should refresh token when access_token is valid', fakeAsync(() => {
     tokenService.set(Object.assign({ expires_in: 5 }, token));
     expect(authService.check()).toBeTrue();
