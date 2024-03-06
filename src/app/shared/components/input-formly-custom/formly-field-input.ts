@@ -7,4 +7,4 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
    <input type="file" [formControl]="formControl" [formlyAttributes]="field">
  `,
 })
-export class FormlyFieldInput extends FieldType<FieldTypeConfig> { } 
+export class FormlyFieldInputFile extends FieldType<FieldTypeConfig> { } 

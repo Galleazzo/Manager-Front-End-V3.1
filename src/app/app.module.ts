@@ -24,11 +24,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 }
 
 import { LoginService } from '@core/authentication/login.service';
-import { FormlyFieldInput } from '@shared/components/input-formly-custom/formly-field-input';
+import { FormlyFieldInputFile } from '@shared/components/input-formly-custom/formly-field-input';
 import { FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
-  declarations: [AppComponent, FormlyFieldInput],
+  declarations: [AppComponent, FormlyFieldInputFile],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -49,7 +49,7 @@ import { FormlyModule } from '@ngx-formly/core';
     BrowserAnimationsModule,
     FormlyModule.forRoot({
       types: [
-        { name: 'inputFile', component: FormlyFieldInput },
+        { name: 'inputFile', component: FormlyFieldInputFile },
       ]
     }),
   ],

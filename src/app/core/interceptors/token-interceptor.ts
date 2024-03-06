@@ -29,10 +29,6 @@ export class TokenInterceptor implements HttpInterceptor {
       if (request.url.includes('/auth/logout')) {
         this.router.navigateByUrl('/auth/login');
       }
-
-      if (this.router.url.includes('/auth/login')) {
-        this.router.navigateByUrl('/dashboard');
-      }
     };
 
     var token = this.loginService.getToken();

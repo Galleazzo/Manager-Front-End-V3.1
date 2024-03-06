@@ -19,6 +19,10 @@ export class LoginService {
   }
 
   verifyToken(){
+    var token = this.getToken();
+    if(token == null) {
+      return false;
+    }
     return this.http.get<any>(environment.server + `/auth/checkToken?token=${this.getToken()}`)
   }
 
