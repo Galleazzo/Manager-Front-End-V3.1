@@ -191,10 +191,9 @@ export class AnimalsFormComponent implements OnInit {
       size: [data ? this.selectAnimalSize(data.size) : null],
       description: [data ? data.description : ""],
       registrationDate: [data ? data.registrationDate : ""],
-      priority: [data ? data.priority : 0]
+      priority: [data ? data.priority : 0],
+      animalImage: [data ? data.animalImage : null]
     })
-    console.log(this.animalForm);
-
   }
 
   submit() {
