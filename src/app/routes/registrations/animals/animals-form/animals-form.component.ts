@@ -123,14 +123,14 @@ export class AnimalsFormComponent implements OnInit {
         rows: 5
       },
     },
-    {
+    /*{
       type: 'inputFile',
       key: 'animalImage',
       templateOptions: {
         label: 'Imagem do animal',
         accept: 'image/*',
       },
-    },
+    },*/
     {
       fieldGroupClassName: 'row',
       fieldGroup: [

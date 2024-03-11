@@ -28,7 +28,7 @@ import { FormlyFieldInputFile } from '@shared/components/input-formly-custom/for
 import { FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
-  declarations: [AppComponent, FormlyFieldInputFile],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -46,12 +46,7 @@ import { FormlyModule } from '@ngx-formly/core';
         deps: [HttpClient],
       },
     }),
-    BrowserAnimationsModule,
-    FormlyModule.forRoot({
-      types: [
-        { name: 'inputFile', component: FormlyFieldInputFile },
-      ]
-    }),
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
