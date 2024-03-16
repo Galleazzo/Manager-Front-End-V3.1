@@ -5,7 +5,6 @@ import { FormlyFieldComboboxComponent } from './formly-templates';
 import { FormlyValidations } from './formly-validations';
 import { FormlyWrapperCardComponent, FormlyWrapperDivComponent } from './formly-wrappers';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { FormlyFieldInputFile } from '@shared/components/input-formly-custom/formly-field-input';
 
 /**
  * Formly global configuration
@@ -17,11 +16,6 @@ const formlyModuleProviders = FormlyModule.forRoot({
       component: FormlyFieldComboboxComponent,
       wrappers: ['form-field'],
     },
-    {
-      name: 'inputFile',
-      component: FormlyFieldInputFile,
-      wrappers: ['form-field']
-    }
   ],
   wrappers: [
     {
@@ -41,8 +35,7 @@ const formlyModuleProviders = FormlyModule.forRoot({
     FormlyMaterialModule,
     FormlyFieldComboboxComponent,
     FormlyWrapperCardComponent,
-    FormlyWrapperDivComponent,
-    FormlyFieldInputFile
+    FormlyWrapperDivComponent
   ],
   providers: [FormlyValidations],
 })

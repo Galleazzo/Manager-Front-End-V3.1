@@ -1,17 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
+import { Component } from '@angular/core';
+import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'formly-field-input',
-  template: `<input type="file" [formControl]="formControl" [formlyAttributes]="field">`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormlyModule
-  ]
+  selector: 'formly-field-file',
+  template: ` <input type="file" [formControl]="formControl" [formlyAttributes]="field" /> `,
 })
-export class FormlyFieldInputFile extends FieldType<FieldTypeConfig> {
-  selectedFile: any;
-} 
+export class FormlyFieldFile extends FieldType<FieldTypeConfig> { }
