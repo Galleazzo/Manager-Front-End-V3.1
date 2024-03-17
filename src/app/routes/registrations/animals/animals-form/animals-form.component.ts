@@ -6,6 +6,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { PageHeaderComponent } from '@shared';
+import { InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
 import { AnimalsService } from '@shared/services/animals.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -124,7 +125,7 @@ export class AnimalsFormComponent implements OnInit {
       },
     },
     {
-      type: 'file',
+      type: InputFieldType,
       key: 'animalImage',
      
     },
@@ -194,6 +195,8 @@ export class AnimalsFormComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.animalForm.value);
+    
     this.animalService.save(this.animalForm.value).subscribe((response: any) => {
       return this.router.navigate(['/registrations/animals']);
     })

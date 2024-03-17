@@ -25,11 +25,10 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 import { LoginService } from '@core/authentication/login.service';
 import { FormlyModule } from '@ngx-formly/core';
-import { FormlyFieldFile } from '@shared/components/input-formly-custom/formly-field-input';
-import { FileValueAccessor } from '@shared/components/input-formly-custom/file-value-accessor';
+import { InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
 
 @NgModule({
-  declarations: [AppComponent, FileValueAccessor, FormlyFieldFile],
+  declarations: [AppComponent, InputFieldType],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -38,7 +37,7 @@ import { FileValueAccessor } from '@shared/components/input-formly-custom/file-v
     SharedModule,
     RoutesModule,
     FormlyModule.forRoot({
-      types: [{ name: 'file', component: FormlyFieldFile, wrappers: ['form-field']}]
+      types: [{ name: 'file', component: InputFieldType }]
     }),
     FormlyConfigModule.forRoot(),
     NgxPermissionsModule.forRoot(),
