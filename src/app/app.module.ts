@@ -23,7 +23,6 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { LoginService } from '@core/authentication/login.service';
 import { FormlyModule } from '@ngx-formly/core';
 import { InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
 
@@ -53,11 +52,6 @@ import { InputFieldType } from '@shared/components/input-formly-custom/formly-fi
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
-    // ==================================================
-    // 👇 ❌ Remove it in the realworld application
-    //
-    //
-    // ==================================================
     ...httpInterceptorProviders,
     ...appInitializerProviders,
   ],

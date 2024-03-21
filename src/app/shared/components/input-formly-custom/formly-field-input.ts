@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'formly-field-input',
   template: `
@@ -11,6 +14,8 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 export class InputFieldType extends FieldType<FieldTypeConfig> { 
   fileName: any = null
   fileType: any = null;
+
+  fileFinal: any = null
 
   constructor(private sanitizer: DomSanitizer) {
     super();
@@ -25,9 +30,12 @@ export class InputFieldType extends FieldType<FieldTypeConfig> {
         window.URL.createObjectURL(file)
       ),
     };
-    console.log(fileHandel);
-    
-    
+    this.fileFinal = fileHandel;
+    return fileHandel;
+  }
+
+  get finalValue() {
+    return this.fileFinal;
   }
 }
 

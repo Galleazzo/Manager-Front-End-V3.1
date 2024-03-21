@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { PageHeaderComponent } from '@shared';
-import { InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
+import { FileHandel, InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
 import { AnimalsService } from '@shared/services/animals.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -32,6 +33,7 @@ export class AnimalsFormComponent implements OnInit {
   model: any;
   type: string = "";
   isLoading = true;
+  finalFile: any = null;
 
   fields: FormlyFieldConfig[] = [
     {
@@ -127,7 +129,21 @@ export class AnimalsFormComponent implements OnInit {
     {
       type: InputFieldType,
       key: 'animalImage',
-     
+      hooks: {
+        onChanges: (changes: any) => {
+          if (changes && changes.currentValue) {
+            const file = changes.currentValue.file;
+            const fileHandel: FileHandel = {
+              file: file,
+              url: this.sanitizer.bypassSecurityTrustUrl(
+                window.URL.createObjectURL(file)
+              ),
+            };
+            this.finalFile = fileHandel;
+            console.log("oioiiiiiiiiiii" + this.finalFile);
+          }
+        }
+      }
     },
     {
       fieldGroupClassName: 'row',
@@ -161,7 +177,9 @@ export class AnimalsFormComponent implements OnInit {
     private animalService: AnimalsService,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private inputField: InputFieldType,
+    private sanitizer: DomSanitizer) { }
 
 
   ngOnInit(): void {
@@ -196,8 +214,11 @@ export class AnimalsFormComponent implements OnInit {
 
   submit() {
     console.log(this.animalForm.value);
+    console.log(this.finalFile);
     
-    this.animalService.save(this.animalForm.value).subscribe((response: any) => {
+    const animalForm = this.prepareFormData(this.animalForm.value);
+    
+    this.animalService.save(animalForm).subscribe((response: any) => {
       return this.router.navigate(['/registrations/animals']);
     })
   }
@@ -273,4 +294,27 @@ export class AnimalsFormComponent implements OnInit {
     throw new Error();
   }
 
+
+  prepareFormData(animal: any): FormData {
+    const formData = new FormData();
+
+    formData.append(
+      'animal',
+      new Blob([JSON.stringify(animal)], { type: 'application/json' })
+    );
+
+    var finalImage = this.inputField.finalValue;
+    console.log(finalImage);
+    
+
+    for (var i = 0; i < animal.productImages.length; i++) {
+      formData.append(
+        'imageFile',
+        animal.productImages[i].file,
+        animal.productImages[i].file.name
+      );
+    }
+
+    return formData;
+  }
 }
