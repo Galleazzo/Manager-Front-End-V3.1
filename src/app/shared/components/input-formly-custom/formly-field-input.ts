@@ -1,6 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
+import { FileService } from '@shared/services/file.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,25 +18,23 @@ export class InputFieldType extends FieldType<FieldTypeConfig> {
 
   fileFinal: any = null
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private fileService: FileService) {
     super();
   }
 
   fileChangeEvent(e: any) {
-    console.log(e.target.files[0]);
     const file = e.target.files[0];
-    const fileHandel: FileHandel = {
+    const fileHandel: any = {
       file: file,
       url: this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file)
       ),
     };
-    this.fileFinal = fileHandel;
-    return fileHandel;
+    this.fileService.setFileFinal(fileHandel);
   }
 
   get finalValue() {
-    return this.fileFinal;
+    return this.fileService.getFileFinal();
   }
 }
 

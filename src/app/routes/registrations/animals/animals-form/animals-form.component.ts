@@ -128,22 +128,7 @@ export class AnimalsFormComponent implements OnInit {
     },
     {
       type: InputFieldType,
-      key: 'animalImage',
-      hooks: {
-        onChanges: (changes: any) => {
-          if (changes && changes.currentValue) {
-            const file = changes.currentValue.file;
-            const fileHandel: FileHandel = {
-              file: file,
-              url: this.sanitizer.bypassSecurityTrustUrl(
-                window.URL.createObjectURL(file)
-              ),
-            };
-            this.finalFile = fileHandel;
-            console.log("oioiiiiiiiiiii" + this.finalFile);
-          }
-        }
-      }
+      key: 'animalImage'
     },
     {
       fieldGroupClassName: 'row',
@@ -213,11 +198,8 @@ export class AnimalsFormComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.animalForm.value);
-    console.log(this.finalFile);
-    
     const animalForm = this.prepareFormData(this.animalForm.value);
-    
+
     this.animalService.save(animalForm).subscribe((response: any) => {
       return this.router.navigate(['/registrations/animals']);
     })
@@ -294,26 +276,32 @@ export class AnimalsFormComponent implements OnInit {
     throw new Error();
   }
 
-
   prepareFormData(animal: any): FormData {
     const formData = new FormData();
+    var finalAnimal = {
+      id: animal.id,
+      name: animal.name,
+      instagramURL: animal.instagramURL,
+      animalAge: animal.animalAge,
+      animalType: animal.animalType,
+      race: animal.race,
+      size: animal.size,
+      description: animal.description,
+      registrationDate: null
+    }
 
     formData.append(
       'animal',
-      new Blob([JSON.stringify(animal)], { type: 'application/json' })
+      new Blob([JSON.stringify(finalAnimal)], { type: 'application/json' })
     );
 
     var finalImage = this.inputField.finalValue;
-    console.log(finalImage);
-    
 
-    for (var i = 0; i < animal.productImages.length; i++) {
-      formData.append(
-        'imageFile',
-        animal.productImages[i].file,
-        animal.productImages[i].file.name
-      );
-    }
+    formData.append(
+      'imageFile',
+      finalImage.file,
+      finalImage.file.name
+    );
 
     return formData;
   }
