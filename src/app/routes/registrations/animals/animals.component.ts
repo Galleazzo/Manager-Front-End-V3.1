@@ -14,6 +14,8 @@ import { AnimalsService } from '@shared/services/animals.service';
 import { finalize } from 'rxjs';
 import { ModalDeleteComponent } from './delete-modal/modal-delete.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ImageProcessingService } from '@shared/services/image-processing.service';
+import { ViewImageModalComponent } from './view-image-modal/view-image-modal.component';
 
 @Component({
   selector: 'app-animals',
@@ -60,6 +62,14 @@ export class AnimalsComponent implements OnInit {
           click: (value) => {
             this.deleteById(value)
           }
+        },
+        {
+          type: 'icon',
+          icon: 'crop_original',
+          tooltip: 'Imagem',
+          click: (value) => {
+            this.openImageDetail(value)
+          }
         }
       ]
     }
@@ -75,7 +85,7 @@ export class AnimalsComponent implements OnInit {
   sort: string = "id";
   order: string = "desc";
 
-  constructor(private animalsService: AnimalsService, private router: Router, private dialog: MatDialog, private translate: TranslateService) {
+  constructor(private animalsService: AnimalsService, private router: Router, private dialog: MatDialog, private translate: TranslateService, private imageProcessingService: ImageProcessingService) {
   }
 
   ngOnInit() {
@@ -87,8 +97,13 @@ export class AnimalsComponent implements OnInit {
     this.animalsService.getByCriteria(this.animalName, this.page, this.pageSize, this.sort, this.order).pipe(finalize(() => {
       this.isLoading = false;
     })).subscribe(res => {
+      
 
       this.list = res.content;
+      
+      this.list.forEach(animal => {
+        animal = this.imageProcessingService.createImages(animal)
+      })
 
       this.list.forEach(animal => {
         if(animal.animalType == "DOG") {
@@ -166,6 +181,16 @@ export class AnimalsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => (
       this.ngOnInit()
     ));
+  }
+
+  openImageDetail(value: any) {
+    const dialogRef = this.dialog.open(ViewImageModalComponent, {
+      width: "auto",
+      data: {
+        data: value
+      },
+    });
+    
   }
 
   editAnimal(value: any) {

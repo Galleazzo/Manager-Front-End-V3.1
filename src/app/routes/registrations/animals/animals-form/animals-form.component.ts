@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { PageHeaderComponent } from '@shared';
+import { FileHandel, InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
 import { AnimalsService } from '@shared/services/animals.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -31,6 +33,7 @@ export class AnimalsFormComponent implements OnInit {
   model: any;
   type: string = "";
   isLoading = true;
+  finalFile: any = null;
 
   fields: FormlyFieldConfig[] = [
     {
@@ -124,12 +127,8 @@ export class AnimalsFormComponent implements OnInit {
       },
     },
     {
-      type: 'inputFile',
-      key: 'animalImage',
-      templateOptions: {
-        label: 'Imagem do animal',
-        accept: 'image/*',
-      },
+      type: InputFieldType,
+      key: 'animalImage'
     },
     {
       fieldGroupClassName: 'row',
@@ -163,7 +162,9 @@ export class AnimalsFormComponent implements OnInit {
     private animalService: AnimalsService,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private inputField: InputFieldType,
+    private sanitizer: DomSanitizer) { }
 
 
   ngOnInit(): void {
@@ -197,7 +198,9 @@ export class AnimalsFormComponent implements OnInit {
   }
 
   submit() {
-    this.animalService.save(this.animalForm.value).subscribe((response: any) => {
+    const animalForm = this.prepareFormData(this.animalForm.value);
+
+    this.animalService.save(animalForm).subscribe((response: any) => {
       return this.router.navigate(['/registrations/animals']);
     })
   }
@@ -273,4 +276,33 @@ export class AnimalsFormComponent implements OnInit {
     throw new Error();
   }
 
+  prepareFormData(animal: any): FormData {
+    const formData = new FormData();
+    var finalAnimal = {
+      id: animal.id,
+      name: animal.name,
+      instagramURL: animal.instagramURL,
+      animalAge: animal.animalAge,
+      animalType: animal.animalType,
+      race: animal.race,
+      size: animal.size,
+      description: animal.description,
+      registrationDate: null
+    }
+
+    formData.append(
+      'animal',
+      new Blob([JSON.stringify(finalAnimal)], { type: 'application/json' })
+    );
+
+    var finalImage = this.inputField.finalValue;
+
+    formData.append(
+      'imageFile',
+      finalImage.file,
+      finalImage.file.name
+    );
+
+    return formData;
+  }
 }
