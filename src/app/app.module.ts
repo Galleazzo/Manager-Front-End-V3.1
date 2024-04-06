@@ -23,12 +23,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { LoginService } from '@core/authentication/login.service';
-import { FormlyFieldInputFile } from '@shared/components/input-formly-custom/formly-field-input';
 import { FormlyModule } from '@ngx-formly/core';
+import { InputFieldType } from '@shared/components/input-formly-custom/formly-field-input';
 
 @NgModule({
-  declarations: [AppComponent, FormlyFieldInputFile],
+  declarations: [AppComponent, InputFieldType],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -36,6 +35,9 @@ import { FormlyModule } from '@ngx-formly/core';
     ThemeModule,
     SharedModule,
     RoutesModule,
+    FormlyModule.forRoot({
+      types: [{ name: 'file', component: InputFieldType }]
+    }),
     FormlyConfigModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     ToastrModule.forRoot(),
@@ -46,20 +48,10 @@ import { FormlyModule } from '@ngx-formly/core';
         deps: [HttpClient],
       },
     }),
-    BrowserAnimationsModule,
-    FormlyModule.forRoot({
-      types: [
-        { name: 'inputFile', component: FormlyFieldInputFile },
-      ]
-    }),
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
-    // ==================================================
-    // 👇 ❌ Remove it in the realworld application
-    //
-    //
-    // ==================================================
     ...httpInterceptorProviders,
     ...appInitializerProviders,
   ],

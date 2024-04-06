@@ -35,7 +35,7 @@ const formlyModuleProviders = FormlyModule.forRoot({
     FormlyMaterialModule,
     FormlyFieldComboboxComponent,
     FormlyWrapperCardComponent,
-    FormlyWrapperDivComponent,
+    FormlyWrapperDivComponent
   ],
   providers: [FormlyValidations],
 })
