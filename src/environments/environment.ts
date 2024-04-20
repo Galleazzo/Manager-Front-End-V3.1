@@ -8,6 +8,7 @@ export const environment = {
   useHash: false,
   debugging: true,
   server: 'http://18.216.92.175:8080',
+  //http://localhost:8080
 };
 
 /*
