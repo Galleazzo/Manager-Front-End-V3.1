@@ -7,7 +7,7 @@ export const environment = {
   baseUrl: '',
   useHash: false,
   debugging: true,
-  server: 'http://localhost:8080',
+  server: 'http://18.216.92.175:8080',
 };
 
 /*
