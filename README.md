@@ -1,27 +1,52 @@
-# ManagerFrontEndV31
+# Pacotinho do Amor 🐾
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.3.
+Este é o repositório para o projeto **Pacotinho do Amor**, uma aplicação web desenvolvida com Angular e utilizando o template [ng-matero](https://github.com/ng-matero/ng-matero). O Pacotinho do Amor é uma iniciativa voluntária dedicada ao resgate e adoção de animais de rua, especialmente cães e gatos.
 
-## Development server
+## Tecnologias Utilizadas 🚀
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Angular
+- [ng-matero](https://github.com/ng-matero/ng-matero) (Template)
+- Vercel (Para implantação)
+- API REST (Para comunicação com o backend)
 
-## Code scaffolding
+## Como Rodar Localmente 💻
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Para rodar o projeto localmente em sua máquina, siga os passos abaixo:
 
-## Build
+### Pré-requisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Node.js e npm instalados
+- Angular CLI instalado (`npm install -g @angular/cli`)
 
-## Running unit tests
+### Passos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone este repositório para sua máquina local:
 
-## Running end-to-end tests
+   ```bash
+   git clone [https://github.com/Galleazzo/PacotinhoDoAmor-FrontEnd-Dash.git
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Navegue até o diretório do projeto:
 
-## Further help
+   ```bash
+   cd pacotinho-do-amor
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3.Instale as dependências do projeto:
+
+    ```bash
+    npm install
+
+4. Após a instalação das dependências, inicie o servidor de desenvolvimento:
+
+    ```bash
+    ng serve
+
+5. Abra seu navegador e acesse http://localhost:4200/ para visualizar o aplicativo em execução.
+
+
+# Contribuindo 🤝
+
+Sinta-se à vontade para contribuir com este projeto! Basta fazer um fork deste repositório, fazer as alterações desejadas e enviar um pull request. Toda contribuição é bem-vinda!
+
+# Implantação 🌐
+
+Este projeto está implantado na plataforma Vercel. Você pode acessá-lo em https://pacotinho-do-amor-dashboards.vercel.app/auth/login
