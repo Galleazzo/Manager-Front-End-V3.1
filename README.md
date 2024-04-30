@@ -45,7 +45,7 @@ Para rodar o projeto localmente em sua máquina, siga os passos abaixo:
 
 # Contribuindo 🤝
 
-Sinta-se à vontade para contribuir com este projeto! Basta fazer um fork deste repositório, fazer as alterações desejadas e enviar um pull request. Toda contribuição é bem-vinda!
+Se tiver interesse em ajudar esse projeto entre em contato diretamente comigo no email paulogalleazzo1@gmail.com
 
 # Implantação 🌐
 
