@@ -2,6 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 import { FileService } from '@shared/services/file.service';
+import imageCompression from 'browser-image-compression';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,19 @@ export class InputFieldType extends FieldType<FieldTypeConfig> {
     super();
   }
 
-  fileChangeEvent(e: any) {
+  async fileChangeEvent(e: any) {
     const file = e.target.files[0];
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true
+    };
+
+    const compressedFile = await imageCompression(file, options);
     const fileHandel: any = {
-      file: file,
+      file: compressedFile,
       url: this.sanitizer.bypassSecurityTrustUrl(
-        window.URL.createObjectURL(file)
+        window.URL.createObjectURL(compressedFile)
       ),
     };
     this.fileService.setFileFinal(fileHandel);

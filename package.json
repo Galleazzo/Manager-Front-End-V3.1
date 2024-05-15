@@ -32,6 +32,7 @@
     "@ngx-formly/material": "^6.2.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "browser-image-compression": "^2.0.2",
     "moment": "^2.29.4",
     "ng-matero": "^17.0.0",
     "ngx-permissions": "^16.0.1",
