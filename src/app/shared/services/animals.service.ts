@@ -33,4 +33,7 @@ export class AnimalsService {
         return this._httpClient.get<any>(environment.server + `/animals?id=${id}`);
     }
   
+    changeActive(id: any) {
+        return this._httpClient.post<any>(environment.server + `/animals/changeActive?id=${id}`, null);
+    }
 }

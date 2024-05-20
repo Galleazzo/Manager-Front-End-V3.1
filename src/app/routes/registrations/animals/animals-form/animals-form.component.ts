@@ -127,14 +127,25 @@ export class AnimalsFormComponent implements OnInit {
       },
     },
     {
-      type: InputFieldType,
-      key: 'animalImage'
-    },
-    {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-sm-6',
+          className: 'col-sm-4',
+          type: 'combobox',
+          key: 'animalSex',
+          templateOptions: {
+            label: 'Sexo',
+            options: [
+              { id: 0, name: 'MALE', label: 'Macho' },
+              { id: 1, name: 'FEMALE', label: 'Femea' },
+            ],
+            labelProp: 'label',
+            valueProp: 'name',
+            required: true,
+          },
+        },
+        {
+          className: 'col-sm-4',
           type: 'input',
           key: 'race',
           templateOptions: {
@@ -143,7 +154,7 @@ export class AnimalsFormComponent implements OnInit {
           },
         },
         {
-          className: 'col-sm-6',
+          className: 'col-sm-4',
           type: 'input',
           key: 'priority',
           templateOptions: {
@@ -151,10 +162,14 @@ export class AnimalsFormComponent implements OnInit {
             label: 'Prioridade',
             max: 10,
             min: 0,
-            pattern: '\\d{5}',
+            required: true
           },
         },
       ],
+    },
+    {
+      type: InputFieldType,
+      key: 'animalImage'
     },
   ];
 
@@ -191,10 +206,13 @@ export class AnimalsFormComponent implements OnInit {
       race: [data ? data.race : ""],
       size: [data ? this.selectAnimalSize(data.size) : null],
       description: [data ? data.description : ""],
+      animalSex: [data ? this.selectAnimalSex(data.animalSex) : null],
       registrationDate: [data ? data.registrationDate : ""],
       priority: [data ? data.priority : 0],
       animalImage: [data ? data.animalImage : null]
     })
+    console.log(this.animalForm);
+    
   }
 
   submit() {
@@ -263,6 +281,16 @@ export class AnimalsFormComponent implements OnInit {
     throw new Error();
   }
 
+  selectAnimalSex(animalSex: any): number {
+    if (animalSex == "MALE") {
+      return 0;
+    }
+    if (animalSex == "FEMALE") {
+      return 1;
+    }
+    throw new Error();
+  }
+
   selectAnimalSize(animalSize: string): number {
     if (animalSize == "SMALL") {
       return 0;
@@ -286,6 +314,8 @@ export class AnimalsFormComponent implements OnInit {
       animalType: animal.animalType,
       race: animal.race,
       size: animal.size,
+      animalSex: animal.animalSex,
+      priority: animal.priority,
       description: animal.description,
       registrationDate: null
     }
@@ -296,12 +326,13 @@ export class AnimalsFormComponent implements OnInit {
     );
 
     var finalImage = this.inputField.finalValue;
-
-    formData.append(
-      'imageFile',
-      finalImage.file,
-      finalImage.file.name
-    );
+    if(finalImage != null) {
+      formData.append(
+        'imageFile',
+        finalImage.file,
+        finalImage.file.name
+      );
+    }
 
     return formData;
   }

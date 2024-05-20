@@ -16,6 +16,7 @@ import { ModalDeleteComponent } from './delete-modal/modal-delete.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ImageProcessingService } from '@shared/services/image-processing.service';
 import { ViewImageModalComponent } from './view-image-modal/view-image-modal.component';
+import { ModalStatusComponent } from './change-status-modal/modal-status.component';
 
 @Component({
   selector: 'app-animals',
@@ -37,11 +38,10 @@ export class AnimalsComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'id', field: 'id' },
     { header: 'Nome', field: 'name' },
-    { header: 'Idade', field: 'animalAge' },
-    { header: 'Tipo', field: 'animalType' },
     { header: 'URL do insta', field: 'instagramURL', type: 'link' },
     { header: 'Data de cadastro', field: 'registrationDate', type: 'date' },
     { header: 'Prioridade', field: 'priority' },
+    { header: 'Status', field: 'active' },
     {
       header: 'Ações',
       field: 'actions',
@@ -69,6 +69,14 @@ export class AnimalsComponent implements OnInit {
           tooltip: 'Imagem',
           click: (value) => {
             this.openImageDetail(value)
+          }
+        },
+        {
+          type: 'icon',
+          icon: 'pets',
+          tooltip: 'Status',
+          click: (value) => {
+            this.changeStatus(value)
           }
         }
       ]
@@ -146,7 +154,6 @@ export class AnimalsComponent implements OnInit {
       
 
       this.total = res.totalElements;
-      this.isLoading = false;
     });
   }
 
@@ -174,6 +181,17 @@ export class AnimalsComponent implements OnInit {
 
   deleteById(value: any) {
     const dialogRef = this.dialog.open(ModalDeleteComponent, {
+      data: {
+        data: value
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => (
+      this.ngOnInit()
+    ));
+  }
+
+  changeStatus(value: any) {
+    const dialogRef = this.dialog.open(ModalStatusComponent, {
       data: {
         data: value
       },
