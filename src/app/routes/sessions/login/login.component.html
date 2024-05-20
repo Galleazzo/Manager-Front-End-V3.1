@@ -16,7 +16,7 @@
           <input matInput type="password" formControlName="password" required>
         </mat-form-field>
 
-        <button class="w-full m-y-16" mat-raised-button color="primary"
+        <button id="submit-button" class="w-full m-y-16" mat-raised-button color="primary"
                 [disabled]="!!loginForm.invalid" [loading]="isSubmitting"
                 (click)="login()">{{'login' | translate}}</button>
       </form>
