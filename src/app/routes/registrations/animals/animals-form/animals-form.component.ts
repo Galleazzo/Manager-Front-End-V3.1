@@ -66,7 +66,7 @@ export class AnimalsFormComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-sm-4',
-          type: 'combobox',
+          type: 'select',
           key: 'animalAge',
           id: 'animalAge',
           templateOptions: {
@@ -89,7 +89,7 @@ export class AnimalsFormComponent implements OnInit {
         },
         {
           className: 'col-sm-4',
-          type: 'combobox',
+          type: 'select',
           key: 'animalType',
           id: 'animalType',
           templateOptions: {
@@ -106,7 +106,7 @@ export class AnimalsFormComponent implements OnInit {
         },
         {
           className: 'col-sm-4',
-          type: 'combobox',
+          type: 'select',
           key: 'size',
           id: 'size',
           templateOptions: {
@@ -137,7 +137,7 @@ export class AnimalsFormComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-sm-4',
-          type: 'combobox',
+          type: 'select',
           key: 'animalSex',
           id: 'animalSex',
           templateOptions: {
