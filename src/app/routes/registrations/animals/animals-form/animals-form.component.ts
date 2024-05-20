@@ -43,6 +43,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-6',
           type: 'input',
           key: 'name',
+          id: "name",
           templateOptions: {
             label: 'Nome',
             required: true,
@@ -52,6 +53,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-6',
           type: 'input',
           key: 'instagramURL',
+          id: "instagramURL",
           templateOptions: {
             label: 'URL do instagram',
             required: false,
@@ -66,6 +68,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-4',
           type: 'combobox',
           key: 'animalAge',
+          id: 'animalAge',
           templateOptions: {
             label: 'Idade',
             options: [
@@ -88,6 +91,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-4',
           type: 'combobox',
           key: 'animalType',
+          id: 'animalType',
           templateOptions: {
             label: 'Tipo',
             options: [
@@ -104,6 +108,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-4',
           type: 'combobox',
           key: 'size',
+          id: 'size',
           templateOptions: {
             label: 'Tamanho',
             options: [
@@ -121,6 +126,7 @@ export class AnimalsFormComponent implements OnInit {
     {
       type: 'textarea',
       key: 'description',
+      id: 'description',
       templateOptions: {
         label: 'Descrição',
         rows: 5
@@ -133,6 +139,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-4',
           type: 'combobox',
           key: 'animalSex',
+          id: 'animalSex',
           templateOptions: {
             label: 'Sexo',
             options: [
@@ -148,6 +155,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-4',
           type: 'input',
           key: 'race',
+          id: 'race',
           templateOptions: {
             label: 'Raça',
             required: true,
@@ -157,6 +165,7 @@ export class AnimalsFormComponent implements OnInit {
           className: 'col-sm-4',
           type: 'input',
           key: 'priority',
+          id: 'priority',
           templateOptions: {
             type: 'number',
             label: 'Prioridade',
@@ -169,7 +178,8 @@ export class AnimalsFormComponent implements OnInit {
     },
     {
       type: InputFieldType,
-      key: 'animalImage'
+      key: 'animalImage',
+      id: "animalImage"
     },
   ];
 
