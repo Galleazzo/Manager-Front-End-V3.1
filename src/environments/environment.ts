@@ -7,7 +7,7 @@ export const environment = {
   baseUrl: '',
   useHash: false,
   //debugging: true,
-  server: 'https://pacotinho-do-amor-backend-939a6da45d01.herokuapp.com',
+  server: 'https://pacotinho-do-amor-backend-0dbed823eb99.herokuapp.com',
   //http://localhost:8080
 };
 
