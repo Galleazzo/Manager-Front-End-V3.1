@@ -41,7 +41,11 @@ export class AnimalsComponent implements OnInit {
     { header: 'URL do insta', field: 'instagramURL', type: 'link' },
     { header: 'Data de cadastro', field: 'registrationDate', type: 'date' },
     { header: 'Prioridade', field: 'priority' },
-    { header: 'Status', field: 'active' },
+    { 
+      header: 'Status', 
+      field: 'active',
+      formatter: (value) => value.active ? 'Em adoção' : 'Adotado'
+    },
     {
       header: 'Ações',
       field: 'actions',

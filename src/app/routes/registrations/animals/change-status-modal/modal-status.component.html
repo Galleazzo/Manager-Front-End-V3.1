@@ -1,5 +1,12 @@
 <h2 mat-dialog-title>Mudar de status</h2>
-<div mat-dialog-content>Voce tem certeza que deseja mesmo mudar o status esse pet?</div>
+<div mat-dialog-content>
+  <p>Você tem certeza que deseja mesmo mudar o status desse pet?</p>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Data de Adoção" [(ngModel)]="adoptionDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
 <div mat-dialog-actions>
   <button mat-button color="primary" (click)="change()">Sim</button>
   <button mat-button color="warn" (click)="cancel()">Não</button>
