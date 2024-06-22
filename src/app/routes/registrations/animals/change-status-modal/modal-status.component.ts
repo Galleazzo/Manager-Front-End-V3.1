@@ -1,16 +1,18 @@
-import { Directionality } from "@angular/cdk/bidi";
-import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
-import { AnimalsService } from "@shared/services/animals.service";
-
+import { Directionality } from '@angular/cdk/bidi';
+import { Component, Inject, TemplateRef, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { AnimalsService } from '@shared/services/animals.service';
 
 @Component({
     selector: 'modal-status',
     templateUrl: 'modal-status.component.html',
     standalone: true,
-    imports: [MatDialogModule, MatButtonModule],
+    imports: [MatDialogModule, MatButtonModule, MatDatepickerModule, MatInputModule, FormsModule],
 })
 export class ModalStatusComponent {
 
@@ -25,22 +27,31 @@ export class ModalStatusComponent {
     verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
     animal: any;
+    adoptionDate!: Date;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ModalStatusComponent>,
         private animalsService: AnimalsService,
         public snackBar: MatSnackBar,
         private _dir: Directionality) {
-
+                    
         this.animal = data.data;
+        if (this.animal.adoptionDate != null) {
+            this.adoptionDate = this.animal.adoptionDate;
+        }
     }
 
     change() {
-        this.animalsService.changeActive(this.animal.id).subscribe((result: any) => {
+        console.log(this.adoptionDate);
+        if (this.adoptionDate == undefined) {
+            this.adoptionDate = new Date();
+        }
+        
+        this.animalsService.changeActive(this.animal.id, this.adoptionDate).subscribe((result: any) => {
             const config = this._createConfig();
             this.snackBar.open("Mudança de status com sucesso!", undefined, config);
             this.dialogRef.close();
-        })
+        });
     }
 
     cancel(){
