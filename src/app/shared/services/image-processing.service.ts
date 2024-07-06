@@ -10,22 +10,23 @@ export class ImageProcessingService {
     constructor(private sanitizer: DomSanitizer) { }
 
     public createImages(product: any) {
-        const productImages: any[] = product.animalImage;
+
+        const productImages = product;
 
         const productImagesToFileHandle: FileHandel[] = [];
+        console.log(productImages);
 
-        for (let i = 0; i < productImages.length; i++) {
-            const imageFileData = productImages[i];
-            const imageBlob = this.dataURItoBlob(imageFileData.picByte, imageFileData.type);
-            const imageFile = new File([imageBlob], imageFileData.name, { type: imageFileData.type });
+        const imageFileData = productImages;
+        const imageBlob = this.dataURItoBlob(imageFileData.picByte, imageFileData.imageType);
+        const imageFile = new File([imageBlob], imageFileData.imageName, { type: imageFileData.imageType });
 
-            const finalFileHandel: FileHandel = {
-                file: imageFile,
-                url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
-            };
+        const finalFileHandel: FileHandel = {
+            file: imageFile,
+            url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
+        };
 
-            productImagesToFileHandle.push(finalFileHandel);
-        }
+        productImagesToFileHandle.push(finalFileHandel);
+        
         product.animalImage = productImagesToFileHandle;
         return product;
     }

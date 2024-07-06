@@ -25,7 +25,7 @@ export class ViewImageModalComponent {
         private _dir: Directionality) {
 
         this.animal = data.data;
-        console.log("modalssssss"+this.animal);
+
         
     }
 
